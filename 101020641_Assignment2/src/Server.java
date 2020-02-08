@@ -7,6 +7,8 @@ public class Server {
 
 	DatagramPacket sendPacket, receivePacket;
 	DatagramSocket sendSocket, receiveSocket;
+	byte[] b = {(byte)0,(byte)3,(byte)0,(byte)1};
+	byte[] a = {(byte)0,(byte)4,(byte)0,(byte)0};
 
 	public Server() {
 		try {
@@ -19,6 +21,8 @@ public class Server {
 			// on the local host machine. This socket will be used to
 			// receive UDP Datagram packets.
 			receiveSocket = new DatagramSocket(69);
+			
+			
 
 		} catch (SocketException se) {
 			se.printStackTrace();
@@ -142,22 +146,12 @@ public class Server {
 			this.receive(data);
 			this.parse(data);
 			System.out.println("Server: Create response packet.");
-			byte[] b = new byte[4];
 			if (data[1] == (byte) 1) {
-				b[0] = (byte) 0;
-				b[1] = (byte) 3;
-				b[2] = (byte) 0;
-				b[3] = (byte) 1;
+				this.send(b);
 			}
-
 			if (data[1] == (byte) 2) {
-				b[0] = (byte) 0;
-				b[1] = (byte) 4;
-				b[2] = (byte) 0;
-				b[3] = (byte) 0;
+				this.send(a);
 			}
-
-			this.send(b);
 		}
 	}
 
